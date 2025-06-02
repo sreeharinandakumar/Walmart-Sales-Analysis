@@ -1,9 +1,16 @@
-Walmart Sales Data Analysis (SQL Project)
-📊 Project Overview
-This project explores Walmart sales data using SQL queries. It involves data cleaning, feature engineering, and answering real-world business questions related to sales, revenue, product performance, and customer behavior.
+# Walmart Sales Data Analysis (SQL Project)
 
-🏗️ Database Setup & Structure
-Database & Table Creation
+## 📊 Project Overview
+
+This project explores Walmart sales data using **SQL queries**. It involves **data cleaning**, **feature engineering**, and **answering real-world business questions** related to sales, revenue, product performance, and customer behavior.
+
+---
+
+## 🏗️ Database Setup & Structure
+
+### Database & Table Creation
+
+```sql
 CREATE DATABASE IF NOT EXISTS SalesDataWalmart;
 USE SalesDataWalmart;
 
@@ -26,15 +33,23 @@ CREATE TABLE IF NOT EXISTS sales(
   gross_income DECIMAL(12, 4) NOT NULL,
   rating DECIMAL(4, 2)
 );
+```
 
-Modifications & Safety Settings
+### Modifications & Safety Settings
+
+```sql
 SET sql_safe_updates = 0;
 -- Perform updates/deletes
 SET sql_safe_updates = 1;
+```
 
+---
 
-🧪 Feature Engineering
-Add derived time columns like time_of_day, day_name, and month_name.
+## 🧪 Feature Engineering
+
+Add derived time columns like `time_of_day`, `day_name`, and `month_name`.
+
+```sql
 ALTER TABLE sales ADD COLUMN time_of_day VARCHAR(20);
 UPDATE sales
 SET time_of_day = CASE
@@ -48,32 +63,46 @@ UPDATE sales SET day_name = DAYNAME(date);
 
 ALTER TABLE sales ADD COLUMN month_name VARCHAR(10);
 UPDATE sales SET month_name = MONTHNAME(date);
+```
 
+---
 
-❓ Business Questions & SQL Queries
-🏙️ City & Branch Insights
+## ❓ Business Questions & SQL Queries
+
+### 🏙️ City & Branch Insights
+
+```sql
 -- Unique cities
 SELECT DISTINCT city FROM sales;
 -- Branch-city mapping
 SELECT DISTINCT city, branch FROM sales;
+```
 
-📦 Product Analysis
+### 📦 Product Analysis
+
+```sql
 -- Unique product lines
 SELECT COUNT(DISTINCT product_line) FROM sales;
--- The best-selling product line
+-- The most selling product line
 SELECT product_line, COUNT(*) FROM sales GROUP BY product_line ORDER BY COUNT(*) DESC;
 -- Highest revenue product line
 SELECT product_line, SUM(total) FROM sales GROUP BY product_line ORDER BY SUM(total) DESC;
+```
 
-💸 Revenue & Tax
+### 💸 Revenue & Tax
+
+```sql
 -- Revenue by month
 SELECT month_name, SUM(total) FROM sales GROUP BY month_name ORDER BY SUM(total) DESC;
--- Month with highest COGS
+-- Month with the highest COGS
 SELECT month_name, SUM(cogs) FROM sales GROUP BY month_name ORDER BY SUM(cogs) DESC;
 -- Average VAT by product line
 SELECT product_line, AVG(vat) AS avg_vat FROM sales GROUP BY product_line ORDER BY avg_vat DESC;
+```
 
-🧑‍🤝‍🧑 Customer Insights
+### 🧑‍🤝‍🧑 Customer Insights
+
+```sql
 -- Unique customer types
 SELECT DISTINCT customer_type FROM sales;
 -- Most common customer type
@@ -82,8 +111,11 @@ SELECT customer_type, COUNT(*) FROM sales GROUP BY customer_type ORDER BY COUNT(
 SELECT gender, COUNT(*) FROM sales GROUP BY gender;
 -- Gender distribution by branch
 SELECT branch, gender, COUNT(*) FROM sales GROUP BY branch, gender;
+```
 
-⏰ Time & Rating Analysis
+### ⏰ Time & Rating Analysis
+
+```sql
 -- Average rating by product line
 SELECT product_line, ROUND(AVG(rating), 2) FROM sales GROUP BY product_line ORDER BY AVG(rating) DESC;
 -- Rating by time of day
@@ -92,49 +124,50 @@ SELECT time_of_day, ROUND(AVG(rating), 2) FROM sales GROUP BY time_of_day ORDER 
 SELECT day_name, ROUND(AVG(rating), 2) FROM sales GROUP BY day_name ORDER BY AVG(rating) DESC;
 -- Best-rated day by branch
 SELECT branch, day_name, ROUND(AVG(rating), 2) FROM sales GROUP BY branch, day_name ORDER BY ROUND(AVG(rating), 2) DESC;
+```
 
-🧾 Sales Breakdown
+### 🧾 Sales Breakdown
+
+```sql
 -- Sales count by time of day on Sunday
 SELECT time_of_day, COUNT(*) FROM sales WHERE day_name = 'Sunday' GROUP BY time_of_day ORDER BY COUNT(*) DESC;
 -- Revenue by customer type
 SELECT customer_type, ROUND(SUM(total), 2) FROM sales GROUP BY customer_type ORDER BY SUM(total) DESC;
 -- VAT by city
 SELECT city, AVG(vat) FROM sales GROUP BY city ORDER BY AVG(vat) DESC;
+```
 
+---
 
-📚 Summary
+## 📚 Summary
+
 This SQL project showcases:
-Feature engineering in SQL (derived time columns)
 
+* Feature engineering in SQL (derived time columns)
+* Exploratory data analysis (EDA) using queries
+* Answering business questions using grouping, aggregation, and filtering
 
-Exploratory data analysis (EDA) using queries
+You can use this project as part of your **portfolio** to demonstrate your ability to:
 
+* Work with raw structured data
+* Perform SQL-based data analysis
+* Derive insights for decision-making
 
-Answering business questions using grouping, aggregation, and filtering
+---
 
+## 📌 To Run the Project
 
-You can use this project as part of your portfolio to demonstrate your ability to:
-Work with raw structured data
+1. Clone this repository
+2. Load the dataset into MySQL
+3. Run queries section-by-section
+4. Modify/add more queries as needed
 
+---
 
-Perform SQL-based data analysis
+## 🙋‍♂️ Need help?
 
+Feel free to open an issue or reach out via GitHub or LinkedIn!
 
-Derive insights for decision-making
-
-
-
-📌 To Run the Project
-Clone this repository
-
-
-Load the dataset into MySQL
-
-
-Run queries section-by-section
-
-
-Modify/add more queries as needed
 
 
 
